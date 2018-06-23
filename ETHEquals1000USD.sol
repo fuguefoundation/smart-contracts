@@ -28,7 +28,7 @@ contract ETHEquals1000USD is usingOraclize, owned {
 
     event EtherReceived(uint amount, uint total);
     event SomebodyGuessed(address guesser, uint timestamp, uint guesses);
-    event OraclizeResult(string message, uint result);
+    event OraclizeResult(string message, uint result, uint timestamp);
     event WinnerAnnounced(string message, address winner, uint amount);
 
     struct Participant {
@@ -64,7 +64,7 @@ contract ETHEquals1000USD is usingOraclize, owned {
     function __callback(bytes32 myid, string _result) {
         if (msg.sender != oraclize_cbAddress()) throw;
         uint result = stringToUint(_result); //convert Oracalize result to uint
-        OraclizeResult("Price checked", result);
+        OraclizeResult("Price checked", result, now);
         if (result >= 100000000){ // this number is 1000USD, but `result` loses decimal after string/uint conversion and Kraken API has 5 trailing zeros in return value of price
             priceConfirmedOver1000 = true;
         }
