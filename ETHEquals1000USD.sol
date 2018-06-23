@@ -63,22 +63,11 @@ contract ETHEquals1000USD is usingOraclize, owned {
     // Oracalize callback - https://docs.oraclize.it
     function __callback(bytes32 myid, string _result) {
         if (msg.sender != oraclize_cbAddress()) throw;
-        uint result = stringToUint(_result); //convert Oracalize result to uint
+        uint result = parseInt(_result);
         OraclizeResult("Price checked", result, now);
-        if (result >= 100000000){ // this number is 1000USD, but `result` loses decimal after string/uint conversion and Kraken API has 5 trailing zeros in return value of price
+        if (result >= 1000) {
             priceConfirmedOver1000 = true;
         }
-    }
-
-    function stringToUint(string s) constant returns (uint) {
-        bytes memory b = bytes(s);
-        uint result = 0;
-        for (uint i = 0; i < b.length; i++) { // c = b[i] was not needed
-            if (b[i] >= 48 && b[i] <= 57) {
-                result = result * 10 + (uint(b[i]) - 48); // bytes and int are not compatible with the operator -.
-            }
-        }
-        return result; // this was missing
     }
 
     // Query Kraken API to check ETHUSD price, will trigger __callback method from Oracalize
