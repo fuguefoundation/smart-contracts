@@ -6,7 +6,7 @@ This contract allows participants to guess when they believe the price of ether 
 
 ## Test contract
 
-Deployed to `Rinkeby`, [this contract](https://rinkeby.etherscan.io/address/0x8d928445f180fe2e00bdd18eb9bf73d17e11f8d6) is identical to the solidity contract here except the threshold for ETHUSD price is set to 475USD.
+This contract deployed to `Rinkeby`, [this contract](https://rinkeby.etherscan.io/address/0xd19634ba56f6e59a41de04889e211b22c75ae9f6) is identical to the solidity code here except the threshold for ETHUSD price is set to 475USD and `checkPrice` can only be called by owner because only the first call to Oracalize is free (i.e., we can't make another call to oracle since we are using test ether).
 
 ## Functionality
 
