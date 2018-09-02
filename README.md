@@ -2,17 +2,17 @@
 
 See Reddit posts [here](https://www.reddit.com/r/ethtrader/comments/8ta4l4/eth_at_1000_usd_smart_contract/) and [here](https://www.reddit.com/r/ethtrader/comments/8tgjqk/update_eth_at_1000usd_smart_contract/) for development and discussion about this experiment.
 
-This contract allows participants to guess when they believe the price of ether (ETH) will next reach 500 USD. The contract is loaded with 0.5 ETH (though anyone can add more), and there are two participants that can receive these funds.
+This contract allows participants to guess when they believe the price of ether (ETH) will next reach 500 USD. The contract is loaded with 0.5 ETH (though anyone can add more), and there are two possibilities to receive these funds.
 
-1. **10% of balance**: The participant to first call `claimCheckPriceReward()` once the oracle has set `priceConfirmedOver1000` to true.
-2. **90% of balance**: The participant whose timestamp guess is closest to when ETH hits the 1000 USD mark according to the Kraken API.
+1. **10% of balance**: The participant to first call `claimCheckPriceReward()` once the oracle has set `priceConfirmedOver500` to true.
+2. **90% of balance**: The participant whose timestamp guess is closest to when ETH hits the 500 USD mark according to the Kraken API.
 
-## Functionality
+## Functionality and Contract Logic
 
-1. When making a guess, participants include both a [UNIX timestamp](https://www.unixtimestamp.com/index.php) and an address that will receive the ETH.
+1. When making a guess, participants include a [UNIX timestamp](https://www.unixtimestamp.com/index.php). `msg.sender` is the address that is making the guess and would receive the ETH.
 
 * Guessing period is open for 14 days following contract creation.
-* One guess per address, and participant can't change their guess once made. This is done to prevent people from changing their guess if price starts approaching 500USD during the 30 day guessing period.
+* One guess per address, and participant can't change their guess once made. This is done to prevent people from changing their guess if price starts approaching 500USD during the 14 day guessing period.
 
 2. When `checkPrice` is called, and assuming the price is greater than 500 USD based on Kraken's last trade between the ETHUSD pairing on their API, the oracle callback function sets `priceConfirmedOver500` to true and `winningTimestamp` is set to the current block timestamp.
 
@@ -48,6 +48,7 @@ This is an open source project. Contributions are welcomed & encouraged! :smile:
 
 ## TODO
 * Allow for multiple winners
+* Think of something more complex for ETH1000 contract
 
 ## References
 * [Oracalize](https://docs.oraclize.it/)

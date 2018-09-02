@@ -118,7 +118,7 @@ contract ETHEquals500USD is usingOraclize, owned {
         if (msg.sender == owner){
             participants[id] = Participant({participant: 0, participantSince: now, guess: timestamp, hasGuessed: true, diff: now});
         } else {
-            // prevent user from changing guess, something that would happen as price approaches 500
+            // prevent user from changing guess, something that would happen if price approaches 500 during the guessing period
             if (participants[id].hasGuessed != true){
                 participants[id] = Participant({participant: msg.sender, participantSince: now, guess: timestamp, hasGuessed: true, diff: now});
                 totalGuesses++;
