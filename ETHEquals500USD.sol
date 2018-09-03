@@ -105,7 +105,7 @@ contract ETHEquals500USD is usingOraclize, owned {
 
     // participants make guess by providing UNIX timestamp when they believe ETH >= 500 USD, as determined by Kraken API
     function makeGuess(uint timestamp) public {
-        require(now < CONTRACT_CREATED + SECS_IN_TWO_WEEKS); // establishes guessing period of 14 days following contract creation
+        require(now < CONTRACT_CREATED + SECS_IN_TWO_WEEKS && !priceConfirmedOver500); // establishes guessing period of 14 days following contract creation, no guessing if price hits 500 USD within this timeframe
         uint id = participantId[msg.sender];
 
         if (id == 0) {
@@ -145,7 +145,8 @@ contract ETHEquals500USD is usingOraclize, owned {
     // Query Kraken API to check ETHUSD price, will trigger __callback method from Oracalize
     function checkPrice() public payable {
         require(!priceConfirmedOver500); //ensure method can't be called again once oracle confirms we've crossed 500, thereby changing winningTimestamp.
-        if (oraclize_getPrice("URL") > msg.value) {
+        require(msg.value >= 1000000000000000); //for oracle callback fee, .001 ETH
+        if (oraclize_getPrice("URL") > address(this).balance) {
             emit Feedback("Oraclize query was NOT sent, please add some ETH to cover for the query fee");
         } else {
             oraclize_query("URL", "json(https://api.kraken.com/0/public/Ticker?pair=ETHUSD).result.XETHZUSD.c.0");
