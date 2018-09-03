@@ -7,6 +7,8 @@ This contract allows participants to guess when they believe the price of ether 
 1. **10% of balance**: The participant to first call `claimCheckPriceReward()` once the oracle has set `priceConfirmedOver500` to true.
 2. **90% of balance**: The participant whose timestamp guess is closest to when ETH hits the 500 USD mark according to the Kraken API.
 
+So **bottomline**, if you want to participate, call `makeGuess` with your UNIX timestamp, and if you think your guess is strong relative to when we hit 500, call `nominateSelfAsWinner` with your address. If you want to win the 10% prize, keep an eye on this [API call](https://api.kraken.com/0/public/Ticker?pair=ETHUSD) (specifically, the first value of the `c` array) as we approach 500 and call `checkPrice` followed by `claimCheckPriceReward`.
+
 ## Functionality and Contract Logic
 
 1. When making a guess, participants include a [UNIX timestamp](https://www.unixtimestamp.com/index.php). `msg.sender` is the address that is making the guess and would receive the ETH.
