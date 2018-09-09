@@ -1,6 +1,8 @@
 ## Gist
 
-See Reddit posts [here](https://www.reddit.com/r/ethtrader/comments/8ta4l4/eth_at_1000_usd_smart_contract/) and [here](https://www.reddit.com/r/ethtrader/comments/8tgjqk/update_eth_at_1000usd_smart_contract/) for development and discussion about this experiment.
+[Contract address](https://etherscan.io/address/0xfbf9ae92ecb05bc436d9b1e6c1d928824aedb2f1) - 0xfbf9ae92ecb05bc436d9b1e6c1d928824aedb2f1
+
+See Github issues and Reddit posts [here](https://www.reddit.com/r/ethtrader/comments/8ta4l4/eth_at_1000_usd_smart_contract/) and [here](https://www.reddit.com/r/ethtrader/comments/8tgjqk/update_eth_at_1000usd_smart_contract/) for development and discussion about this experiment.
 
 This contract allows participants to guess when they believe the price of ether (ETH) will next reach 500 USD. The contract is loaded with 0.5 ETH (though anyone can add more), and there are two possibilities to receive these funds.
 
@@ -18,7 +20,7 @@ So **bottomline**, if you want to participate, call `makeGuess` with your UNIX t
 
 2. When `checkPrice` is called, and assuming the price is greater than 500 USD based on Kraken's last trade between the ETHUSD pairing on their API, the oracle callback function sets `priceConfirmedOver500` to true and `winningTimestamp` is set to the current block timestamp.
 
-* To call `checkPrice`, `msg.value` of the transaction must be >= .001 ETH. This is because the Oraclize callback requires a fee, which is taken out of the contract balance.
+* To call `checkPrice`, `msg.value` of the transaction must be >= `oraclePrice` (the return value of `oraclize_getPrice("URL")`, currently about .004 ETH). This is because the Oraclize callback requires a fee, which is taken out of the contract balance. First call is free.
 * `winningTimestamp` is determined by the blockchain and not the instant price breaks 500 on Kraken. Thus, all functions (except `selfdestruct`) can be called by anyone.
 * As an incentive mechanism to call `checkPrice` as close as possible to when we actually pass 500USD, the first person to call `claimCheckPriceReward` **AFTER** `priceConfirmedOver500` is set to true by the oracle is rewarded 10% of the contract's current `totalAmount`. To be clear, the person who gets the reward is not the person who called `checkPrice` but the person who called `claimCheckPriceReward` after `priceConfirmedOver500` is set to true by the oracle. The reason for this is because there are possible gas errors by having the oracle `__callback` call other functions that are `payable`.
 
@@ -38,7 +40,7 @@ So **bottomline**, if you want to participate, call `makeGuess` with your UNIX t
 ## Test contracts
 
 * [Rinkeby test](https://rinkeby.etherscan.io/address/0x701efc16e34b0f95ea2f9399b0da699d3f391af3)
-* [Another Rinkeby test](https://rinkeby.etherscan.io/address/0xd19634ba56f6e59a41de04889e211b22c75ae9f6)
+* [Main net test](https://etherscan.io/address/0x8f234972e3f9a76c0a25b3cd49ea9cf3afdf5538)
 * There are many others self-destructed on Rinkeby
 
 These contracts evolved during the testing period, and differed (in terms of the variables) only by setting the threshold lower for ETHUSD price (relative to current market price) and eliminating the amount of time to elapse to call certain functions.

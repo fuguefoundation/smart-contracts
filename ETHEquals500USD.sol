@@ -75,6 +75,7 @@ contract ETHEquals500USD is usingOraclize, owned {
     uint public totalGuesses = 0;
     uint public totalNominees = 0;
     uint public winningTimestamp;
+    uint public oraclePrice = 0;
     uint public lowestDiff = now; // initiate variable with arbitrarily high value
     address public winner; // seven day nomination period to establish winner
     uint internal CONTRACT_CREATED;
@@ -144,12 +145,12 @@ contract ETHEquals500USD is usingOraclize, owned {
 
     // Query Kraken API to check ETHUSD price, will trigger __callback method from Oracalize
     function checkPrice() public payable {
-        require(!priceConfirmedOver500); //ensure method can't be called again once oracle confirms we've crossed 500, thereby changing winningTimestamp.
-        require(msg.value >= 1000000000000000); //for oracle callback fee, .001 ETH
+        require(!priceConfirmedOver500 && msg.value >= oraclePrice); //ensure method can't be called again once oracle confirms we've crossed 500, thereby changing winningTimestamp. Ensure function caller pays Oracle callback fee
         if (oraclize_getPrice("URL") > address(this).balance) {
             emit Feedback("Oraclize query was NOT sent, please add some ETH to cover for the query fee");
         } else {
             oraclize_query("URL", "json(https://api.kraken.com/0/public/Ticker?pair=ETHUSD).result.XETHZUSD.c.0");
+            oraclePrice = oraclize_getPrice("URL");
         }
     }
 
