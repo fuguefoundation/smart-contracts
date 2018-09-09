@@ -53,7 +53,6 @@ This is an open source project. Contributions are welcomed & encouraged! :smile:
 
 ## TODO
 * Allow for multiple winners
-* Think of something more complex for ETH1000 contract
 
 ## References
 * [Oracalize](https://docs.oraclize.it/)
