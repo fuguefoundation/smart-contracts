@@ -35,6 +35,7 @@ So **bottomline**, if you want to participate, call `makeGuess` with your UNIX t
 
 * [Remix](https://remix.ethereum.org) with Metamask. Copy the contract into a new file, compile with  Solidity 0.4.24, then go under the Run tab paste in the contract address where it says `at Address`. This should allow you to interact with the various functions
 * [MyEtherWallet](https://www.myetherwallet.com/#contracts): Copy the abi.json file in this repo and paste in the contract address
+* [Etherscan](https://etherscan.io/address/0xfbf9ae92ecb05bc436d9b1e6c1d928824aedb2f1#readContract): Because the contract is verified, there is functionality in the block explorer that allow people to read and write to the contract using Metamask.
 * There are several other ways, to include Mist and the Geth command line
 
 ## Test contracts
