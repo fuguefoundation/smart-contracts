@@ -1,8 +1,6 @@
 ## Gist
 
-[Contract address](https://etherscan.io/address/0xfbf9ae92ecb05bc436d9b1e6c1d928824aedb2f1) - 0xfbf9ae92ecb05bc436d9b1e6c1d928824aedb2f1
-
-See Github issues and Reddit posts [here](https://www.reddit.com/r/ethtrader/comments/8ta4l4/eth_at_1000_usd_smart_contract/) and [here](https://www.reddit.com/r/ethtrader/comments/8tgjqk/update_eth_at_1000usd_smart_contract/) for development and discussion about this experiment.
+[Contract address](https://etherscan.io/address/0xfbf9ae92ecb05bc436d9b1e6c1d928824aedb2f1) - 0xfbf9ae92ecb05bc436d9b1e6c1d928824aedb2f1 - *Self destructed*
 
 This contract allows participants to guess when they believe the price of ether (ETH) will next reach 500 USD. The contract is loaded with 0.5 ETH (though anyone can add more), and there are two possibilities to receive these funds.
 
